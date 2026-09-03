@@ -2,85 +2,85 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Caça-Palavras</title>
+  <title>Jogo de Moto</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; }
-    #grid { display: grid; gap: 5px; margin: 20px auto; }
-    .cell { width: 40px; height: 40px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    #timer, #level { font-size: 20px; margin: 10px; }
-    #words { margin-top: 20px; }
+    body { margin:0; overflow:hidden; background:#87CEEB; }
+    canvas { display:block; margin:0 auto; background:#eee; border:2px solid #333; }
   </style>
 </head>
 <body>
-  <h1>Caça-Palavras</h1>
-  <div id="level">Nível: Fácil</div>
-  <div id="timer">Tempo: 60</div>
-  <div id="grid"></div>
-  <div id="words"></div>
-  <button onclick="nextLevel()">Próximo Nível</button>
-
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
   <script>
-    const levels = [
-      {name:"Fácil", size:8, time:60, words:["CARRO","MOTO","ANA"]},
-      {name:"Normal", size:10, time:45, words:["BICICLETA","SOFA","JOAO","MARIA"]},
-      {name:"Difícil", size:12, time:30, words:["CAMINHONETE","CADEIRA","TELEVISAO","FERNANDA"]}
-    ];
-    let currentLevel = 0;
-    let time = levels[currentLevel].time;
-    let timer;
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
 
-    function startLevel() {
-      const level = levels[currentLevel];
-      document.getElementById("level").innerText = "Nível: " + level.name;
-      document.getElementById("words").innerText = "Palavras: " + level.words.join(", ");
-      generateGrid(level.size, level.words);
-      startTimer(level.time);
+    let moto = { x:50, y:300, width:50, height:30, color:"red" };
+    let obstacles = [];
+    let speed = 3;
+    let score = 0;
+    let gameOver = false;
+
+    function drawMoto() {
+      ctx.fillStyle = moto.color;
+      ctx.fillRect(moto.x, moto.y, moto.width, moto.height);
     }
 
-    function generateGrid(size, words) {
-      const grid = document.getElementById("grid");
-      grid.style.gridTemplateColumns = `repeat(${size}, 40px)`;
-      grid.innerHTML = "";
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      for (let i=0; i<size*size; i++) {
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        cell.innerText = letters[Math.floor(Math.random()*letters.length)];
-        grid.appendChild(cell);
+    function drawObstacles() {
+      ctx.fillStyle = "black";
+      obstacles.forEach(o => {
+        ctx.fillRect(o.x, o.y, o.width, o.height);
+      });
+    }
+
+    function updateObstacles() {
+      obstacles.forEach(o => o.x -= speed);
+      if (obstacles.length === 0 || obstacles[obstacles.length-1].x < 400) {
+        let height = Math.random()*100+20;
+        obstacles.push({x:600, y:400-height, width:30, height:height});
       }
-      // Inserir palavras horizontalmente (simplificado)
-      words.forEach((word, index) => {
-        for (let i=0; i<word.length && i<size; i++) {
-          grid.children[index*size + i].innerText = word[i];
+      obstacles = obstacles.filter(o => o.x+o.width > 0);
+    }
+
+    function checkCollision() {
+      obstacles.forEach(o => {
+        if (moto.x < o.x+o.width &&
+            moto.x+moto.width > o.x &&
+            moto.y < o.y+o.height &&
+            moto.y+moto.height > o.y) {
+          gameOver = true;
         }
       });
     }
 
-    function startTimer(seconds) {
-      clearInterval(timer);
-      time = seconds;
-      document.getElementById("timer").innerText = "Tempo: " + time;
-      timer = setInterval(() => {
-        time--;
-        document.getElementById("timer").innerText = "Tempo: " + time;
-        if (time <= 0) {
-          clearInterval(timer);
-          alert("Tempo esgotado! Tente novamente.");
-        }
-      }, 1000);
+    function drawScore() {
+      ctx.fillStyle = "blue";
+      ctx.font = "20px Arial";
+      ctx.fillText("Pontuação: " + score, 10, 20);
     }
 
-    function nextLevel() {
-      currentLevel++;
-      if (currentLevel >= levels.length) {
-        alert("Parabéns! Você completou todos os níveis.");
-        currentLevel = 0;
+    function gameLoop() {
+      if (gameOver) {
+        ctx.fillStyle = "black";
+        ctx.font = "40px Arial";
+        ctx.fillText("Game Over!", 200, 200);
+        return;
       }
-      startLevel();
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawMoto();
+      updateObstacles();
+      drawObstacles();
+      checkCollision();
+      drawScore();
+      score++;
+      requestAnimationFrame(gameLoop);
     }
 
-    startLevel();
+    document.addEventListener("keydown", e => {
+      if (e.key === "ArrowUp" && moto.y > 0) moto.y -= 30;
+      if (e.key === "ArrowDown" && moto.y < canvas.height-moto.height) moto.y += 30;
+    });
+
+    gameLoop();
   </script>
 </body>
 </html>
-
