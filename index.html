@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Caça-Palavras</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    #grid { display: grid; gap: 5px; margin: 20px auto; }
+    .cell { width: 40px; height: 40px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    #timer, #level { font-size: 20px; margin: 10px; }
+    #words { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Caça-Palavras</h1>
+  <div id="level">Nível: Fácil</div>
+  <div id="timer">Tempo: 60</div>
+  <div id="grid"></div>
+  <div id="words"></div>
+  <button onclick="nextLevel()">Próximo Nível</button>
+
+  <script>
+    const levels = [
+      {name:"Fácil", size:8, time:60, words:["CARRO","MOTO","ANA"]},
+      {name:"Normal", size:10, time:45, words:["BICICLETA","SOFA","JOAO","MARIA"]},
+      {name:"Difícil", size:12, time:30, words:["CAMINHONETE","CADEIRA","TELEVISAO","FERNANDA"]}
+    ];
+    let currentLevel = 0;
+    let time = levels[currentLevel].time;
+    let timer;
+
+    function startLevel() {
+      const level = levels[currentLevel];
+      document.getElementById("level").innerText = "Nível: " + level.name;
+      document.getElementById("words").innerText = "Palavras: " + level.words.join(", ");
+      generateGrid(level.size, level.words);
+      startTimer(level.time);
+    }
+
+    function generateGrid(size, words) {
+      const grid = document.getElementById("grid");
+      grid.style.gridTemplateColumns = `repeat(${size}, 40px)`;
+      grid.innerHTML = "";
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      for (let i=0; i<size*size; i++) {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.innerText = letters[Math.floor(Math.random()*letters.length)];
+        grid.appendChild(cell);
+      }
+      // Inserir palavras horizontalmente (simplificado)
+      words.forEach((word, index) => {
+        for (let i=0; i<word.length && i<size; i++) {
+          grid.children[index*size + i].innerText = word[i];
+        }
+      });
+    }
+
+    function startTimer(seconds) {
+      clearInterval(timer);
+      time = seconds;
+      document.getElementById("timer").innerText = "Tempo: " + time;
+      timer = setInterval(() => {
+        time--;
+        document.getElementById("timer").innerText = "Tempo: " + time;
+        if (time <= 0) {
+          clearInterval(timer);
+          alert("Tempo esgotado! Tente novamente.");
+        }
+      }, 1000);
+    }
+
+    function nextLevel() {
+      currentLevel++;
+      if (currentLevel >= levels.length) {
+        alert("Parabéns! Você completou todos os níveis.");
+        currentLevel = 0;
+      }
+      startLevel();
+    }
+
+    startLevel();
+  </script>
+</body>
+</html>
 
