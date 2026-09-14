@@ -1,86 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Jogo de Moto</title>
-  <style>
-    body { margin:0; overflow:hidden; background:#87CEEB; }
-    canvas { display:block; margin:0 auto; background:#eee; border:2px solid #333; }
-  </style>
-</head>
-<body>
-  <canvas id="gameCanvas" width="600" height="400"></canvas>
-  <script>
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
-
-    let moto = { x:50, y:300, width:50, height:30, color:"red" };
-    let obstacles = [];
-    let speed = 3;
-    let score = 0;
-    let gameOver = false;
-
-    function drawMoto() {
-      ctx.fillStyle = moto.color;
-      ctx.fillRect(moto.x, moto.y, moto.width, moto.height);
-    }
-
-    function drawObstacles() {
-      ctx.fillStyle = "black";
-      obstacles.forEach(o => {
-        ctx.fillRect(o.x, o.y, o.width, o.height);
-      });
-    }
-
-    function updateObstacles() {
-      obstacles.forEach(o => o.x -= speed);
-      if (obstacles.length === 0 || obstacles[obstacles.length-1].x < 400) {
-        let height = Math.random()*100+20;
-        obstacles.push({x:600, y:400-height, width:30, height:height});
-      }
-      obstacles = obstacles.filter(o => o.x+o.width > 0);
-    }
-
-    function checkCollision() {
-      obstacles.forEach(o => {
-        if (moto.x < o.x+o.width &&
-            moto.x+moto.width > o.x &&
-            moto.y < o.y+o.height &&
-            moto.y+moto.height > o.y) {
-          gameOver = true;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Matemática</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-      });
-    }
 
-    function drawScore() {
-      ctx.fillStyle = "blue";
-      ctx.font = "20px Arial";
-      ctx.fillText("Pontuação: " + score, 10, 20);
-    }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-    function gameLoop() {
-      if (gameOver) {
-        ctx.fillStyle = "black";
-        ctx.font = "40px Arial";
-        ctx.fillText("Game Over!", 200, 200);
-        return;
-      }
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      drawMoto();
-      updateObstacles();
-      drawObstacles();
-      checkCollision();
-      drawScore();
-      score++;
-      requestAnimationFrame(gameLoop);
-    }
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "ArrowUp" && moto.y > 0) moto.y -= 30;
-      if (e.key === "ArrowDown" && moto.y < canvas.height-moto.height) moto.y += 30;
-    });
-
-    gameLoop();
-  </script>
-</body>
-</html>
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          
