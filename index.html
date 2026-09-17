@@ -101,8 +101,15 @@
 
         #resultado p {
             color: #ddd;
-            margin: 0;
+            margin: 6px 0;
             line-height: 1.5;
+        }
+
+        .idade {
+            font-size: 1.1rem;
+            color: #fad0c4 !important;
+            font-weight: 500;
+            margin-top: 12px !important;
         }
 
         @keyframes fadeIn {
@@ -123,6 +130,7 @@
         <div id="resultado">
             <h2 id="nomeSigno"></h2>
             <p id="descricao"></p>
+            <p class="idade" id="idade"></p>
         </div>
     </div>
 
@@ -141,6 +149,18 @@
             { nome: "Escorpião", inicio: [10, 23], fim: [11, 21], emoji: "♏", descricao: "Intenso, misterioso e apaixonado." },
             { nome: "Sagitário", inicio: [11, 22], fim: [12, 21], emoji: "♐", descricao: "Aventureiro, otimista e filosófico." }
         ];
+
+        function calcularIdade(dataNascimento) {
+            const hoje = new Date();
+            let idade = hoje.getFullYear() - dataNascimento.getFullYear();
+            const mes = hoje.getMonth() - dataNascimento.getMonth();
+            
+            if (mes < 0 || (mes === 0 && hoje.getDate() < dataNascimento.getDate())) {
+                idade--;
+            }
+            
+            return idade;
+        }
 
         function descobrirSigno() {
             const dataInput = document.getElementById("dataNascimento").value;
@@ -175,8 +195,11 @@
             }
 
             if (signoEncontrado) {
+                const idade = calcularIdade(data);
+                
                 document.getElementById("nomeSigno").textContent = `${signoEncontrado.emoji} ${signoEncontrado.nome}`;
                 document.getElementById("descricao").textContent = signoEncontrado.descricao;
+                document.getElementById("idade").textContent = `Idade: ${idade} anos`;
                 document.getElementById("resultado").style.display = "block";
             }
         }
