@@ -1,1 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra seu Signo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: #ccc;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input[type="date"]:focus {
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 0 0 2px #ff9a9e;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #1a1a2e;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4);
+        }
+
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.07);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        #resultado h2 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            color: #ff9a9e;
+        }
+
+        #resultado p {
+            color: #ddd;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Descubra seu Signo</h1>
+        <p>Informe sua data de nascimento</p>
+
+        <input type="date" id="dataNascimento">
+
+        <button onclick="descobrirSigno()">Descobrir Signo</button>
+
+        <div id="resultado">
+            <h2 id="nomeSigno"></h2>
+            <p id="descricao"></p>
+        </div>
+    </div>
+
+    <script>
+        const signos = [
+            { nome: "Capricórnio", inicio: [12, 22], fim: [1, 19], emoji: "♑", descricao: "Ambicioso, disciplinado e responsável." },
+            { nome: "Aquário", inicio: [1, 20], fim: [2, 18], emoji: "♒", descricao: "Independente, inovador e humanitário." },
+            { nome: "Peixes", inicio: [2, 19], fim: [3, 20], emoji: "♓", descricao: "Sensível, intuitivo e compassivo." },
+            { nome: "Áries", inicio: [3, 21], fim: [4, 19], emoji: "♈", descricao: "Corajoso, enérgico e determinado." },
+            { nome: "Touro", inicio: [4, 20], fim: [5, 20], emoji: "♉", descricao: "Paciente, confiável e sensual." },
+            { nome: "Gêmeos", inicio: [5, 21], fim: [6, 20], emoji: "♊", descricao: "Curioso, comunicativo e adaptável." },
+            { nome: "Câncer", inicio: [6, 21], fim: [7, 22], emoji: "♋", descricao: "Protetor, emocional e leal." },
+            { nome: "Leão", inicio: [7, 23], fim: [8, 22], emoji: "♌", descricao: "Criativo, generoso e carismático." },
+            { nome: "Virgem", inicio: [8, 23], fim: [9, 22], emoji: "♍", descricao: "Analítico, prático e perfeccionista." },
+            { nome: "Libra", inicio: [9, 23], fim: [10, 22], emoji: "♎", descricao: "Diplomático, justo e sociável." },
+            { nome: "Escorpião", inicio: [10, 23], fim: [11, 21], emoji: "♏", descricao: "Intenso, misterioso e apaixonado." },
+            { nome: "Sagitário", inicio: [11, 22], fim: [12, 21], emoji: "♐", descricao: "Aventureiro, otimista e filosófico." }
+        ];
+
+        function descobrirSigno() {
+            const dataInput = document.getElementById("dataNascimento").value;
+            
+            if (!dataInput) {
+                alert("Por favor, selecione uma data!");
+                return;
+            }
+
+            const data = new Date(dataInput + "T00:00:00");
+            const dia = data.getDate();
+            const mes = data.getMonth() + 1;
+
+            let signoEncontrado = null;
+
+            for (let signo of signos) {
+                const [mesInicio, diaInicio] = signo.inicio;
+                const [mesFim, diaFim] = signo.fim;
+
+                // Caso especial: Capricórnio (atravessa o ano)
+                if (mesInicio > mesFim) {
+                    if ((mes === mesInicio && dia >= diaInicio) || (mes === mesFim && dia <= diaFim)) {
+                        signoEncontrado = signo;
+                        break;
+                    }
+                } else {
+                    if ((mes === mesInicio && dia >= diaInicio) || (mes === mesFim && dia <= diaFim) || (mes > mesInicio && mes < mesFim)) {
+                        signoEncontrado = signo;
+                        break;
+                    }
+                }
+            }
+
+            if (signoEncontrado) {
+                document.getElementById("nomeSigno").textContent = `${signoEncontrado.emoji} ${signoEncontrado.nome}`;
+                document.getElementById("descricao").textContent = signoEncontrado.descricao;
+                document.getElementById("resultado").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
