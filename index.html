@@ -13,37 +13,37 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd, #7dd3fc);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: #1e3a5f;
             padding: 20px;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             padding: 40px;
             width: 100%;
             max-width: 480px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             text-align: center;
         }
 
         h1 {
             font-size: 1.8rem;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            background: linear-gradient(to right, #0284c7, #0369a1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .subtitulo {
-            color: #ccc;
+            color: #64748b;
             margin-bottom: 30px;
             font-size: 0.95rem;
         }
@@ -51,10 +51,10 @@
         input[type="date"] {
             width: 100%;
             padding: 14px;
-            border: none;
+            border: 1px solid #bae6fd;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: #f0f9ff;
+            color: #1e3a5f;
             font-size: 1rem;
             margin-bottom: 20px;
             outline: none;
@@ -62,8 +62,9 @@
         }
 
         input[type="date"]:focus {
-            background: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 0 0 2px #ff9a9e;
+            background: #e0f2fe;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
         }
 
         button {
@@ -71,8 +72,8 @@
             padding: 14px;
             border: none;
             border-radius: 12px;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            color: #1a1a2e;
+            background: linear-gradient(to right, #0ea5e9, #0284c7);
+            color: white;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
@@ -81,29 +82,30 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
         }
 
         #resultado {
             margin-top: 30px;
             padding: 25px;
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.07);
+            background: #f0f9ff;
             display: none;
             animation: fadeIn 0.5s ease;
             text-align: left;
+            border: 1px solid #bae6fd;
         }
 
         #nomeSigno {
             font-size: 1.7rem;
-            color: #ff9a9e;
+            color: #0284c7;
             text-align: center;
             margin-bottom: 5px;
         }
 
         #datas {
             text-align: center;
-            color: #fad0c4;
+            color: #0369a1;
             font-size: 0.95rem;
             margin-bottom: 18px;
         }
@@ -111,28 +113,30 @@
         .info-item {
             margin-bottom: 14px;
             line-height: 1.55;
+            color: #334155;
         }
 
         .info-item strong {
-            color: #fad0c4;
+            color: #0284c7;
         }
 
         .significado {
-            background: rgba(255, 154, 158, 0.1);
+            background: #e0f2fe;
             padding: 12px 14px;
             border-radius: 10px;
-            border-left: 3px solid #ff9a9e;
+            border-left: 3px solid #0ea5e9;
             margin: 15px 0;
+            color: #1e3a5f;
         }
 
         .idade {
             text-align: center;
             font-size: 1.15rem;
-            color: #ff9a9e;
+            color: #0284c7;
             font-weight: 600;
             margin-top: 18px;
             padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #bae6fd;
         }
 
         @keyframes fadeIn {
