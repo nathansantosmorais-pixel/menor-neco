@@ -28,7 +28,7 @@
             border-radius: 20px;
             padding: 40px;
             width: 100%;
-            max-width: 420px;
+            max-width: 460px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
@@ -42,7 +42,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        p {
+        .subtitulo {
             color: #ccc;
             margin-bottom: 30px;
             font-size: 0.95rem;
@@ -86,30 +86,45 @@
 
         #resultado {
             margin-top: 30px;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 25px;
+            border-radius: 16px;
             background: rgba(255, 255, 255, 0.07);
             display: none;
             animation: fadeIn 0.5s ease;
+            text-align: left;
         }
 
-        #resultado h2 {
-            font-size: 1.6rem;
-            margin-bottom: 8px;
+        #nomeSigno {
+            font-size: 1.7rem;
             color: #ff9a9e;
+            text-align: center;
+            margin-bottom: 5px;
         }
 
-        #resultado p {
-            color: #ddd;
-            margin: 6px 0;
+        #datas {
+            text-align: center;
+            color: #fad0c4;
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        .info-item {
+            margin-bottom: 12px;
             line-height: 1.5;
         }
 
+        .info-item strong {
+            color: #fad0c4;
+        }
+
         .idade {
-            font-size: 1.1rem;
-            color: #fad0c4 !important;
-            font-weight: 500;
-            margin-top: 12px !important;
+            text-align: center;
+            font-size: 1.15rem;
+            color: #ff9a9e;
+            font-weight: 600;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         @keyframes fadeIn {
@@ -121,7 +136,7 @@
 <body>
     <div class="container">
         <h1>✨ Descubra seu Signo</h1>
-        <p>Informe sua data de nascimento</p>
+        <p class="subtitulo">Informe sua data de nascimento</p>
 
         <input type="date" id="dataNascimento">
 
@@ -129,25 +144,179 @@
 
         <div id="resultado">
             <h2 id="nomeSigno"></h2>
-            <p id="descricao"></p>
+            <p id="datas"></p>
+            
+            <div class="info-item"><strong>Elemento:</strong> <span id="elemento"></span></div>
+            <div class="info-item"><strong>Modalidade:</strong> <span id="modalidade"></span></div>
+            <div class="info-item"><strong>Planeta Regente:</strong> <span id="planeta"></span></div>
+            <div class="info-item"><strong>Personalidade:</strong> <span id="descricao"></span></div>
+            <div class="info-item"><strong>Pontos Fortes:</strong> <span id="fortes"></span></div>
+            <div class="info-item"><strong>Pontos Fracos:</strong> <span id="fracos"></span></div>
+            <div class="info-item"><strong>Cor da Sorte:</strong> <span id="cor"></span></div>
+            <div class="info-item"><strong>Número da Sorte:</strong> <span id="numero"></span></div>
+            
             <p class="idade" id="idade"></p>
         </div>
     </div>
 
     <script>
         const signos = [
-            { nome: "Capricórnio", inicio: [12, 22], fim: [1, 19], emoji: "♑", descricao: "Ambicioso, disciplinado e responsável." },
-            { nome: "Aquário", inicio: [1, 20], fim: [2, 18], emoji: "♒", descricao: "Independente, inovador e humanitário." },
-            { nome: "Peixes", inicio: [2, 19], fim: [3, 20], emoji: "♓", descricao: "Sensível, intuitivo e compassivo." },
-            { nome: "Áries", inicio: [3, 21], fim: [4, 19], emoji: "♈", descricao: "Corajoso, enérgico e determinado." },
-            { nome: "Touro", inicio: [4, 20], fim: [5, 20], emoji: "♉", descricao: "Paciente, confiável e sensual." },
-            { nome: "Gêmeos", inicio: [5, 21], fim: [6, 20], emoji: "♊", descricao: "Curioso, comunicativo e adaptável." },
-            { nome: "Câncer", inicio: [6, 21], fim: [7, 22], emoji: "♋", descricao: "Protetor, emocional e leal." },
-            { nome: "Leão", inicio: [7, 23], fim: [8, 22], emoji: "♌", descricao: "Criativo, generoso e carismático." },
-            { nome: "Virgem", inicio: [8, 23], fim: [9, 22], emoji: "♍", descricao: "Analítico, prático e perfeccionista." },
-            { nome: "Libra", inicio: [9, 23], fim: [10, 22], emoji: "♎", descricao: "Diplomático, justo e sociável." },
-            { nome: "Escorpião", inicio: [10, 23], fim: [11, 21], emoji: "♏", descricao: "Intenso, misterioso e apaixonado." },
-            { nome: "Sagitário", inicio: [11, 22], fim: [12, 21], emoji: "♐", descricao: "Aventureiro, otimista e filosófico." }
+            {
+                nome: "Capricórnio", emoji: "♑",
+                inicio: [12, 22], fim: [1, 19],
+                datas: "22 de Dezembro a 19 de Janeiro",
+                elemento: "Terra",
+                modalidade: "Cardinal",
+                planeta: "Saturno",
+                descricao: "Ambicioso, disciplinado, responsável e paciente. Gosta de segurança e conquistas a longo prazo.",
+                fortes: "Determinação, organização, maturidade e lealdade",
+                fracos: "Pode ser rígido, pessimista e excessivamente controlado",
+                cor: "Preto, Marrom e Cinza",
+                numero: "8 e 10"
+            },
+            {
+                nome: "Aquário", emoji: "♒",
+                inicio: [1, 20], fim: [2, 18],
+                datas: "20 de Janeiro a 18 de Fevereiro",
+                elemento: "Ar",
+                modalidade: "Fixo",
+                planeta: "Urano",
+                descricao: "Independente, inovador, humanitário e original. Ama a liberdade e pensar diferente.",
+                fortes: "Criatividade, inteligência, visão de futuro e altruísmo",
+                fracos: "Pode ser distante, teimoso e imprevisível",
+                cor: "Azul e Prata",
+                numero: "4 e 7"
+            },
+            {
+                nome: "Peixes", emoji: "♓",
+                inicio: [2, 19], fim: [3, 20],
+                datas: "19 de Fevereiro a 20 de Março",
+                elemento: "Água",
+                modalidade: "Mutável",
+                planeta: "Netuno",
+                descricao: "Sensível, intuitivo, compassivo e sonhador. Tem grande empatia e imaginação.",
+                fortes: "Empatia, criatividade, intuição e bondade",
+                fracos: "Pode ser indeciso, escapista e emocionalmente vulnerável",
+                cor: "Verde-água e Lilás",
+                numero: "3 e 7"
+            },
+            {
+                nome: "Áries", emoji: "♈",
+                inicio: [3, 21], fim: [4, 19],
+                datas: "21 de Março a 19 de Abril",
+                elemento: "Fogo",
+                modalidade: "Cardinal",
+                planeta: "Marte",
+                descricao: "Corajoso, enérgico, determinado e pioneiro. Gosta de desafios e de liderar.",
+                fortes: "Coragem, iniciativa, honestidade e entusiasmo",
+                fracos: "Pode ser impulsivo, impaciente e agressivo",
+                cor: "Vermelho",
+                numero: "1 e 9"
+            },
+            {
+                nome: "Touro", emoji: "♉",
+                inicio: [4, 20], fim: [5, 20],
+                datas: "20 de Abril a 20 de Maio",
+                elemento: "Terra",
+                modalidade: "Fixo",
+                planeta: "Vênus",
+                descricao: "Paciente, confiável, sensual e prático. Valoriza estabilidade, conforto e prazer.",
+                fortes: "Lealdade, determinação, bom gosto e calma",
+                fracos: "Pode ser teimoso, materialista e resistente a mudanças",
+                cor: "Verde e Rosa",
+                numero: "2 e 6"
+            },
+            {
+                nome: "Gêmeos", emoji: "♊",
+                inicio: [5, 21], fim: [6, 20],
+                datas: "21 de Maio a 20 de Junho",
+                elemento: "Ar",
+                modalidade: "Mutável",
+                planeta: "Mercúrio",
+                descricao: "Curioso, comunicativo, adaptável e inteligente. Ama aprender e conversar.",
+                fortes: "Versatilidade, inteligência, humor e sociabilidade",
+                fracos: "Pode ser superficial, inquieto e inconstante",
+                cor: "Amarelo",
+                numero: "5 e 7"
+            },
+            {
+                nome: "Câncer", emoji: "♋",
+                inicio: [6, 21], fim: [7, 22],
+                datas: "21 de Junho a 22 de Julho",
+                elemento: "Água",
+                modalidade: "Cardinal",
+                planeta: "Lua",
+                descricao: "Protetor, emocional, leal e carinhoso. Valoriza a família e a segurança emocional.",
+                fortes: "Empatia, intuição, lealdade e cuidado",
+                fracos: "Pode ser sensível demais, possessivo e temperamental",
+                cor: "Branco e Prata",
+                numero: "2 e 7"
+            },
+            {
+                nome: "Leão", emoji: "♌",
+                inicio: [7, 23], fim: [8, 22],
+                datas: "23 de Julho a 22 de Agosto",
+                elemento: "Fogo",
+                modalidade: "Fixo",
+                planeta: "Sol",
+                descricao: "Criativo, generoso, carismático e confiante. Gosta de brilhar e ser admirado.",
+                fortes: "Liderança, generosidade, criatividade e lealdade",
+                fracos: "Pode ser orgulhoso, dramático e autoritário",
+                cor: "Dourado e Laranja",
+                numero: "1 e 4"
+            },
+            {
+                nome: "Virgem", emoji: "♍",
+                inicio: [8, 23], fim: [9, 22],
+                datas: "23 de Agosto a 22 de Setembro",
+                elemento: "Terra",
+                modalidade: "Mutável",
+                planeta: "Mercúrio",
+                descricao: "Analítico, prático, perfeccionista e prestativo. Gosta de ordem e eficiência.",
+                fortes: "Inteligência, organização, dedicação e atenção aos detalhes",
+                fracos: "Pode ser crítico demais, ansioso e perfeccionista",
+                cor: "Bege e Verde-musgo",
+                numero: "5 e 14"
+            },
+            {
+                nome: "Libra", emoji: "♎",
+                inicio: [9, 23], fim: [10, 22],
+                datas: "23 de Setembro a 22 de Outubro",
+                elemento: "Ar",
+                modalidade: "Cardinal",
+                planeta: "Vênus",
+                descricao: "Diplomático, justo, sociável e elegante. Busca equilíbrio e harmonia em tudo.",
+                fortes: "Charme, diplomacia, senso estético e justiça",
+                fracos: "Pode ser indeciso, superficial e evitar conflitos",
+                cor: "Rosa e Azul-claro",
+                numero: "6 e 9"
+            },
+            {
+                nome: "Escorpião", emoji: "♏",
+                inicio: [10, 23], fim: [11, 21],
+                datas: "23 de Outubro a 21 de Novembro",
+                elemento: "Água",
+                modalidade: "Fixo",
+                planeta: "Plutão / Marte",
+                descricao: "Intenso, misterioso, apaixonado e determinado. Tem grande força emocional.",
+                fortes: "Lealdade, profundidade, coragem e intuição",
+                fracos: "Pode ser ciumento, vingativo e controlador",
+                cor: "Vermelho-escuro e Preto",
+                numero: "8 e 11"
+            },
+            {
+                nome: "Sagitário", emoji: "♐",
+                inicio: [11, 22], fim: [12, 21],
+                datas: "22 de Novembro a 21 de Dezembro",
+                elemento: "Fogo",
+                modalidade: "Mutável",
+                planeta: "Júpiter",
+                descricao: "Aventureiro, otimista, filosófico e livre. Ama viajar e expandir horizontes.",
+                fortes: "Otimismo, honestidade, generosidade e senso de humor",
+                fracos: "Pode ser irresponsável, impaciente e excessivamente franco",
+                cor: "Roxo e Azul",
+                numero: "3 e 9"
+            }
         ];
 
         function calcularIdade(dataNascimento) {
@@ -158,7 +327,6 @@
             if (mes < 0 || (mes === 0 && hoje.getDate() < dataNascimento.getDate())) {
                 idade--;
             }
-            
             return idade;
         }
 
@@ -180,14 +348,15 @@
                 const [mesInicio, diaInicio] = signo.inicio;
                 const [mesFim, diaFim] = signo.fim;
 
-                // Caso especial: Capricórnio (atravessa o ano)
-                if (mesInicio > mesFim) {
+                if (mesInicio > mesFim) { // Capricórnio
                     if ((mes === mesInicio && dia >= diaInicio) || (mes === mesFim && dia <= diaFim)) {
                         signoEncontrado = signo;
                         break;
                     }
                 } else {
-                    if ((mes === mesInicio && dia >= diaInicio) || (mes === mesFim && dia <= diaFim) || (mes > mesInicio && mes < mesFim)) {
+                    if ((mes === mesInicio && dia >= diaInicio) || 
+                        (mes === mesFim && dia <= diaFim) || 
+                        (mes > mesInicio && mes < mesFim)) {
                         signoEncontrado = signo;
                         break;
                     }
@@ -198,8 +367,17 @@
                 const idade = calcularIdade(data);
                 
                 document.getElementById("nomeSigno").textContent = `${signoEncontrado.emoji} ${signoEncontrado.nome}`;
+                document.getElementById("datas").textContent = signoEncontrado.datas;
+                document.getElementById("elemento").textContent = signoEncontrado.elemento;
+                document.getElementById("modalidade").textContent = signoEncontrado.modalidade;
+                document.getElementById("planeta").textContent = signoEncontrado.planeta;
                 document.getElementById("descricao").textContent = signoEncontrado.descricao;
+                document.getElementById("fortes").textContent = signoEncontrado.fortes;
+                document.getElementById("fracos").textContent = signoEncontrado.fracos;
+                document.getElementById("cor").textContent = signoEncontrado.cor;
+                document.getElementById("numero").textContent = signoEncontrado.numero;
                 document.getElementById("idade").textContent = `Idade: ${idade} anos`;
+                
                 document.getElementById("resultado").style.display = "block";
             }
         }
